@@ -63,4 +63,24 @@ void List::append(int d){
 	size++;
 }
 
-//Write List::remove() here
+void List::remove(int idx){
+    if(root == NULL) return; // List is empty, nothing to remove
+
+    Node *temp;
+    if(idx == 0){
+        temp = root; // Store the node to be deleted
+        root = root->next; // Update the root
+    } else {
+        Node *current = root;
+        for(int i = 0; i < idx-1; i++){
+            if(current->next == NULL) return; // Index out of bounds
+            current = current->next;
+        }
+        temp = current->next; // Node to be deleted
+        if(temp == NULL) return; // Index out of bounds
+        current->next = temp->next; // Unlink the node from the list
+    }
+    
+    delete temp; // Delete the node and free memory
+    size--; // Decrement the size of the list
+}
